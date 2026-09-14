@@ -1,18 +1,19 @@
 return {
   {
-    "mxsdev/nvim-dap-vscode-js",
-    dependencies = { "mfussenegger/nvim-dap" },
+    "mfussenegger/nvim-dap",
     config = function()
-      require("dap-vscode-js").setup({
-        debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
-        adapters = {
-          "pwa-node",
-          "pwa-chrome",
-          "pwa-msedge",
-          "node-terminal",
-          "pwa-extensionHost",
+      local dap = require("dap")
+
+      -- js-debug-adapter (Mason) を type = "server" として登録
+      dap.adapters["pwa-node"] = {
+        type = "server",
+        host = "localhost",
+        port = "${port}",
+        executable = {
+          command = "js-debug-adapter",
+          args = { "${port}" },
         },
-      })
+      }
 
       local js_languages = {
         "typescript",
@@ -22,50 +23,50 @@ return {
       }
 
       for _, language in ipairs(js_languages) do
-        require("dap").configurations[language] = {
+        dap.configurations[language] = {
           {
             type = "pwa-node",
             request = "launch",
             name = "Launch file",
             program = "${file}",
             cwd = "${workspaceFolder}",
+            sourceMaps = true,
           },
           {
             type = "pwa-node",
             request = "attach",
-            name = "Attach",
+            name = "Attach to Node process",
             processId = require("dap.utils").pick_process,
             cwd = "${workspaceFolder}",
+            sourceMaps = true,
           },
           {
             type = "pwa-node",
             request = "launch",
             name = "Debug Jest Tests",
             runtimeExecutable = "node",
-            runtimeArgs = {
-              "./node_modules/jest/bin/jest.js",
-              "--runInBand",
-            },
+            runtimeArgs = { "./node_modules/jest/bin/jest.js", "--runInBand" },
             rootPath = "${workspaceFolder}",
             cwd = "${workspaceFolder}",
             console = "integratedTerminal",
             internalConsoleOptions = "neverOpen",
           },
-          {
-            type = "pwa-chrome",
-            request = "launch",
-            name = "Launch Chrome against localhost",
-            url = "http://localhost:3000",
-            webRoot = "${workspaceFolder}",
-          },
         }
       end
+
+      -- dap-ui 自動開閉
+      local dapui_ok, dapui = pcall(require, "dapui")
+      if dapui_ok then
+        dap.listeners.after.event_initialized["dapui_config"] = function()
+          dapui.open()
+        end
+        dap.listeners.before.event_terminated["dapui_config"] = function()
+          dapui.close()
+        end
+        dap.listeners.before.event_exited["dapui_config"] = function()
+          dapui.close()
+        end
+      end
     end,
-  },
-  {
-    "microsoft/vscode-js-debug",
-    lazy = true,
-    build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
-    version = "1.*",
   },
 }
