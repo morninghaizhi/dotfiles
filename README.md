@@ -18,8 +18,12 @@ morninghaizhi's personal Mac configuration, managed via symbolic links from `~/d
 │   ├── sketchybar/
 │   │   ├── sketchybarrc     # SketchyBar status bar (shows AeroSpace workspaces)
 │   │   └── plugins/
-│   └── starship/
-│       └── starship.toml
+│   ├── starship/
+│   │   └── starship.toml
+│   └── wezterm/
+│       ├── wezterm.lua      # WezTerm terminal
+│       ├── keybinds.lua
+│       └── session-restore/ # wz-session.py (session state JSON is gitignored)
 └── zmk-config-roBa/    # git submodule — keyboard firmware config (builds on its own GitHub Actions)
 ```
 
@@ -48,6 +52,7 @@ mkdir -p ~/.config
 ln -s ~/dotfiles/.config/starship ~/.config/starship
 ln -s ~/dotfiles/.config/aerospace ~/.config/aerospace
 ln -s ~/dotfiles/.config/sketchybar ~/.config/sketchybar
+ln -s ~/dotfiles/.config/wezterm ~/.config/wezterm
 
 # AeroSpace: launch once and grant Accessibility permission
 # (System Settings → Privacy & Security → Accessibility)

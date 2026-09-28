@@ -24,3 +24,6 @@ id_ed25519
 # Backup files
 *.bak
 *.old
+
+# WezTerm session state
+.config/wezterm/session-restore/*.json
