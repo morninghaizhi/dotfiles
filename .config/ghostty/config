@@ -10,25 +10,13 @@ macos-titlebar-style = tabs
 window-padding-balance = true
 
 # Behavior
+# Only the first window at launch attaches to herdr; later windows/tabs get a plain shell.
+# Detach (ctrl+q q) closes that window. Falls back to a login shell if herdr fails to start.
+initial-command = /opt/homebrew/bin/herdr || exec /bin/zsh -l
 confirm-close-surface = true
 copy-on-select = clipboard
 shell-integration-features = cursor,sudo,title
 
-# Keybinds — ctrl+q is the leader (same as WezTerm)
-keybind = ctrl+q>d=new_split:down
-keybind = ctrl+q>r=new_split:right
-keybind = ctrl+q>x=close_surface
-keybind = ctrl+q>h=goto_split:left
-keybind = ctrl+q>j=goto_split:bottom
-keybind = ctrl+q>k=goto_split:top
-keybind = ctrl+q>l=goto_split:right
-keybind = ctrl+q>z=toggle_split_zoom
-keybind = ctrl+q>{=move_tab:-1
-keybind = ctrl+q>}=move_tab:1
-keybind = ctrl+q>shift+h=resize_split:left,20
-keybind = ctrl+q>shift+j=resize_split:down,20
-keybind = ctrl+q>shift+k=resize_split:up,20
-keybind = ctrl+q>shift+l=resize_split:right,20
-keybind = ctrl+q>equal=equalize_splits
-keybind = ctrl+tab=next_tab
-keybind = ctrl+shift+tab=previous_tab
+# Keybinds — splits live in herdr (prefix ctrl+q), so Ghostty stays a single surface
+keybind = super+d=unbind
+keybind = super+shift+d=unbind

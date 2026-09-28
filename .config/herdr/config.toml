@@ -1,0 +1,26 @@
+onboarding = false
+# herdr config — `herdr --default-config` prints every option
+# Reload: prefix+shift+r or `herdr server reload-config`
+
+[theme]
+name = "tokyo-night"
+auto_switch = true # tokyo-night-day in light mode
+
+[keys]
+# Same leader as WezTerm (Ghostty leaves ctrl+q unbound for this)
+prefix = "ctrl+q"
+
+# WezTerm-style splits: d = down, r = right
+split_horizontal = "prefix+d"
+split_vertical = "prefix+r"
+
+# prefix+s = resize mode (as in WezTerm); settings moves to prefix+comma
+resize_mode = "prefix+s"
+settings = "prefix+comma"
+
+[experimental]
+# Keep the Japanese IME candidate window next to the cursor in Claude Code
+reveal_hidden_cursor_for_cjk_ime = true
+cjk_ime_agents = ["claude"]
+# Switch to ASCII input while a prefix command is active
+switch_ascii_input_source_in_prefix = true
