@@ -17,6 +17,8 @@ morninghaizhi's personal Mac configuration, managed via symbolic links from `~/d
 │   │   └── aerospace.toml   # AeroSpace tiling window manager
 │   ├── ghostty/
 │   │   └── config           # Ghostty terminal
+│   ├── herdr/
+│   │   └── config.toml      # herdr agent multiplexer (runs inside Ghostty)
 │   ├── sketchybar/
 │   │   ├── sketchybarrc     # SketchyBar status bar (shows AeroSpace workspaces)
 │   │   └── plugins/
@@ -41,6 +43,7 @@ brew install --cask nikitabobko/tap/aerospace
 brew install FelixKratz/formulae/sketchybar FelixKratz/formulae/borders
 brew install --cask font-hack-nerd-font   # icons used by SketchyBar
 brew install --cask ghostty
+brew install herdr
 
 # 3. Clone this repository (--recurse-submodules to also fetch zmk-config-roBa)
 git clone --recurse-submodules https://github.com/morninghaizhi/dotfiles.git ~/dotfiles
@@ -56,6 +59,9 @@ ln -s ~/dotfiles/.config/starship ~/.config/starship
 ln -s ~/dotfiles/.config/aerospace ~/.config/aerospace
 ln -s ~/dotfiles/.config/sketchybar ~/.config/sketchybar
 ln -s ~/dotfiles/.config/ghostty ~/.config/ghostty
+# herdr writes logs into ~/.config/herdr, so link the file only
+mkdir -p ~/.config/herdr
+ln -s ~/dotfiles/.config/herdr/config.toml ~/.config/herdr/config.toml
 ln -s ~/dotfiles/.config/wezterm ~/.config/wezterm
 
 # AeroSpace: launch once and grant Accessibility permission
@@ -66,6 +72,12 @@ open -a AeroSpace
 # System Settings → General → Login Items & Extensions → Allow in the Background
 # Also hide the macOS menu bar (Control Center → Automatically hide and show the menu bar → Always)
 brew services start sketchybar
+
+# herdr: Claude Code integration (hook in ~/.claude) and agent skill
+# Re-run both after `brew upgrade herdr` to keep them in sync with the binary
+herdr integration install claude
+mkdir -p ~/.claude/skills/herdr
+herdr --skill > ~/.claude/skills/herdr/SKILL.md
 
 # 5. Restart terminal
 ```
