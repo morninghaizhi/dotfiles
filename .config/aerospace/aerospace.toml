@@ -49,8 +49,11 @@ outer.right      = 8
 
 # 'main' binding mode
 [mode.main.binding]
-# Open WezTerm
-alt-enter = 'exec-and-forget open -na WezTerm'
+# alt-enter is left free for apps (e.g. Android Studio quick fix)
+# Ghostty is opened via a Raycast hotkey
+
+# Open a new WezTerm window (reuses the running GUI instead of launching another app instance)
+alt-shift-enter = ['workspace W', 'exec-and-forget /opt/homebrew/bin/wezterm cli --no-auto-start spawn --new-window || open -a WezTerm']
 
 # Layouts
 alt-slash = 'layout tiles horizontal vertical'
@@ -70,11 +73,14 @@ alt-shift-j = 'move down'
 alt-shift-k = 'move up'
 alt-shift-l = 'move right'
 
-# Resize
+# Resize ('=' is hard to reach on roBa, so use shift-minus to grow)
 alt-minus = 'resize smart -50'
-alt-equal = 'resize smart +50'
+alt-shift-minus = 'resize smart +50'
 
 # Workspaces
+# Letters are limited to app workspaces (see on-window-detected below).
+# b/d/f are kept free for zsh word movement (alt-b/alt-f/alt-d).
+# Keep in sync with `workspaces` in ~/.config/sketchybar/items/spaces.lua
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
@@ -84,28 +90,24 @@ alt-6 = 'workspace 6'
 alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
-alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
-alt-b = 'workspace B'
-alt-c = 'workspace C'
-alt-d = 'workspace D'
 alt-e = 'workspace E'
 alt-g = 'workspace G'
-alt-i = 'workspace I'
 alt-m = 'workspace M'
-alt-n = 'workspace N'
-alt-o = 'workspace O'
-alt-p = 'workspace P'
-alt-q = 'workspace Q'
-alt-r = 'workspace R'
 alt-s = 'workspace S'
 alt-t = 'workspace T'
-alt-u = 'workspace U'
-alt-v = 'workspace V'
 alt-w = 'workspace W'
-alt-x = 'workspace X'
-alt-y = 'workspace Y'
 alt-z = 'workspace Z'
 
+# roBa's NUM layer sends keypad keycodes
+alt-keypad1 = 'workspace 1'
+alt-keypad2 = 'workspace 2'
+alt-keypad3 = 'workspace 3'
+alt-keypad4 = 'workspace 4'
+alt-keypad5 = 'workspace 5'
+alt-keypad6 = 'workspace 6'
+alt-keypad7 = 'workspace 7'
+alt-keypad8 = 'workspace 8'
+alt-keypad9 = 'workspace 9'
 
 # Move window to workspace
 alt-shift-1 = 'move-node-to-workspace 1'
@@ -117,45 +119,86 @@ alt-shift-6 = 'move-node-to-workspace 6'
 alt-shift-7 = 'move-node-to-workspace 7'
 alt-shift-8 = 'move-node-to-workspace 8'
 alt-shift-9 = 'move-node-to-workspace 9'
-alt-shift-a = 'move-node-to-workspace A'
-alt-shift-b = 'move-node-to-workspace B'
-alt-shift-c = 'move-node-to-workspace C'
-alt-shift-d = 'move-node-to-workspace D'
 alt-shift-e = 'move-node-to-workspace E'
-alt-shift-f = 'move-node-to-workspace F'
 alt-shift-g = 'move-node-to-workspace G'
-alt-shift-i = 'move-node-to-workspace I'
 alt-shift-m = 'move-node-to-workspace M'
-alt-shift-n = 'move-node-to-workspace N'
-alt-shift-o = 'move-node-to-workspace O'
-alt-shift-p = 'move-node-to-workspace P'
-alt-shift-q = 'move-node-to-workspace Q'
-alt-shift-r = 'move-node-to-workspace R'
 alt-shift-s = 'move-node-to-workspace S'
 alt-shift-t = 'move-node-to-workspace T'
-alt-shift-u = 'move-node-to-workspace U'
-alt-shift-v = 'move-node-to-workspace V'
 alt-shift-w = 'move-node-to-workspace W'
-alt-shift-x = 'move-node-to-workspace X'
-alt-shift-y = 'move-node-to-workspace Y'
 alt-shift-z = 'move-node-to-workspace Z'
+
+alt-shift-keypad1 = 'move-node-to-workspace 1'
+alt-shift-keypad2 = 'move-node-to-workspace 2'
+alt-shift-keypad3 = 'move-node-to-workspace 3'
+alt-shift-keypad4 = 'move-node-to-workspace 4'
+alt-shift-keypad5 = 'move-node-to-workspace 5'
+alt-shift-keypad6 = 'move-node-to-workspace 6'
+alt-shift-keypad7 = 'move-node-to-workspace 7'
+alt-shift-keypad8 = 'move-node-to-workspace 8'
+alt-shift-keypad9 = 'move-node-to-workspace 9'
 
 alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
+# Monitors
+cmd-ctrl-h = 'focus-monitor left'
+cmd-ctrl-j = 'focus-monitor down'
+cmd-ctrl-k = 'focus-monitor up'
+cmd-ctrl-l = 'focus-monitor right'
+
+# Move the whole workspace (not a single window) so its key stays the same
+cmd-ctrl-shift-h = 'move-workspace-to-monitor left'
+cmd-ctrl-shift-j = 'move-workspace-to-monitor down'
+cmd-ctrl-shift-k = 'move-workspace-to-monitor up'
+cmd-ctrl-shift-l = 'move-workspace-to-monitor right'
+
 alt-shift-semicolon = 'mode service'
+
+# Enter 'move' mode, then press the target workspace key
+# (easier than alt-shift-<n> on roBa)
+alt-period = 'mode move'
 
 # 'service' binding mode (enter with alt-shift-;)
 [mode.service.binding]
 esc = ['reload-config', 'mode main']
 r = ['flatten-workspace-tree', 'mode main'] # reset layout
 f = ['layout floating tiling', 'mode main'] # toggle floating/tiling
-backspace = ['close-all-windows-but-current', 'mode main']
+b = ['balance-sizes', 'mode main'] # balance window sizes
 
 alt-shift-h = ['join-with left', 'mode main']
 alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
+
+# 'move' binding mode (enter with alt-.)
+# Send the focused window to a workspace, then return to main mode
+[mode.move.binding]
+esc = 'mode main'
+1 = ['move-node-to-workspace 1', 'mode main']
+2 = ['move-node-to-workspace 2', 'mode main']
+3 = ['move-node-to-workspace 3', 'mode main']
+4 = ['move-node-to-workspace 4', 'mode main']
+5 = ['move-node-to-workspace 5', 'mode main']
+6 = ['move-node-to-workspace 6', 'mode main']
+7 = ['move-node-to-workspace 7', 'mode main']
+8 = ['move-node-to-workspace 8', 'mode main']
+9 = ['move-node-to-workspace 9', 'mode main']
+keypad1 = ['move-node-to-workspace 1', 'mode main']
+keypad2 = ['move-node-to-workspace 2', 'mode main']
+keypad3 = ['move-node-to-workspace 3', 'mode main']
+keypad4 = ['move-node-to-workspace 4', 'mode main']
+keypad5 = ['move-node-to-workspace 5', 'mode main']
+keypad6 = ['move-node-to-workspace 6', 'mode main']
+keypad7 = ['move-node-to-workspace 7', 'mode main']
+keypad8 = ['move-node-to-workspace 8', 'mode main']
+keypad9 = ['move-node-to-workspace 9', 'mode main']
+e = ['move-node-to-workspace E', 'mode main']
+g = ['move-node-to-workspace G', 'mode main']
+m = ['move-node-to-workspace M', 'mode main']
+s = ['move-node-to-workspace S', 'mode main']
+t = ['move-node-to-workspace T', 'mode main']
+w = ['move-node-to-workspace W', 'mode main']
+z = ['move-node-to-workspace Z', 'mode main']
 
 # Float apps that don't tile well
 [[on-window-detected]]
@@ -165,3 +208,48 @@ run = 'layout floating'
 [[on-window-detected]]
 if.app-id = 'com.raycast.macos'
 run = 'layout floating'
+
+# Assign apps to workspaces
+[[on-window-detected]] # Arc
+if.app-id = 'company.thebrowser.Browser'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]] # Android Studio
+if.app-id = 'com.google.android.studio'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]] # VS Code
+if.app-id = 'com.microsoft.VSCode'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]] # Mail
+if.app-id = 'com.apple.mail'
+run = 'move-node-to-workspace E'
+
+[[on-window-detected]] # Sourcetree
+if.app-id = 'com.torusknot.SourceTreeNotMAS'
+run = 'move-node-to-workspace 5'
+
+[[on-window-detected]] # Ghostty
+if.app-id = 'com.mitchellh.ghostty'
+run = 'move-node-to-workspace G'
+
+[[on-window-detected]] # Spotify
+if.app-id = 'com.spotify.client'
+run = 'move-node-to-workspace M'
+
+[[on-window-detected]] # Slack
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace S'
+
+[[on-window-detected]] # Teams
+if.app-id = 'com.microsoft.teams2'
+run = 'move-node-to-workspace T'
+
+[[on-window-detected]] # WezTerm
+if.app-id = 'com.github.wez.wezterm'
+run = 'move-node-to-workspace W'
+
+[[on-window-detected]] # Zoom
+if.app-id = 'us.zoom.xos'
+run = 'move-node-to-workspace Z'

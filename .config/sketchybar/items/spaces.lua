@@ -7,8 +7,7 @@ local app_icons = require("helpers.icon_map")
 -- Keep in sync with the `alt-<key> = 'workspace <name>'` bindings in aerospace.toml
 local workspaces = {
 	"1", "2", "3", "4", "5", "6", "7", "8", "9",
-	"A", "B", "C", "D", "E", "G", "I", "M", "N", "O",
-	"P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+	"E", "G", "M", "S", "T", "W", "Z",
 }
 
 local aerospace = "/opt/homebrew/bin/aerospace"
