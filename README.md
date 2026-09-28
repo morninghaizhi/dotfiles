@@ -44,6 +44,7 @@ brew install FelixKratz/formulae/sketchybar FelixKratz/formulae/borders
 brew install --cask font-hack-nerd-font   # icons used by SketchyBar
 brew install --cask ghostty
 brew install herdr
+brew install --cask codex   # OpenAI Codex CLI (a second agent to drive from herdr)
 
 # 3. Clone this repository (--recurse-submodules to also fetch zmk-config-roBa)
 git clone --recurse-submodules https://github.com/morninghaizhi/dotfiles.git ~/dotfiles
@@ -73,11 +74,14 @@ open -a AeroSpace
 # Also hide the macOS menu bar (Control Center → Automatically hide and show the menu bar → Always)
 brew services start sketchybar
 
-# herdr: Claude Code integration (hook in ~/.claude) and agent skill
+# herdr: Claude Code / Codex integrations (hooks in ~/.claude, ~/.codex) and agent skill
 # Re-run both after `brew upgrade herdr` to keep them in sync with the binary
 herdr integration install claude
 mkdir -p ~/.claude/skills/herdr
 herdr --skill > ~/.claude/skills/herdr/SKILL.md
+herdr integration install codex
+mkdir -p ~/.codex/skills/herdr
+herdr --skill > ~/.codex/skills/herdr/SKILL.md
 
 # 5. Restart terminal
 ```
