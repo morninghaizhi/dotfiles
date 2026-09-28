@@ -15,6 +15,9 @@ morninghaizhi's personal Mac configuration, managed via symbolic links from `~/d
 ├── .config/
 │   ├── aerospace/
 │   │   └── aerospace.toml   # AeroSpace tiling window manager
+│   ├── sketchybar/
+│   │   ├── sketchybarrc     # SketchyBar status bar (shows AeroSpace workspaces)
+│   │   └── plugins/
 │   └── starship/
 │       └── starship.toml
 └── zmk-config-roBa/    # git submodule — keyboard firmware config (builds on its own GitHub Actions)
@@ -29,6 +32,8 @@ morninghaizhi's personal Mac configuration, managed via symbolic links from `~/d
 # 2. Install required tools
 brew install starship git
 brew install --cask nikitabobko/tap/aerospace
+brew install FelixKratz/formulae/sketchybar FelixKratz/formulae/borders
+brew install --cask font-hack-nerd-font   # icons used by SketchyBar
 
 # 3. Clone this repository (--recurse-submodules to also fetch zmk-config-roBa)
 git clone --recurse-submodules https://github.com/morninghaizhi/dotfiles.git ~/dotfiles
@@ -42,10 +47,16 @@ ln -s ~/dotfiles/zsh/.zprofile ~/.zprofile
 mkdir -p ~/.config
 ln -s ~/dotfiles/.config/starship ~/.config/starship
 ln -s ~/dotfiles/.config/aerospace ~/.config/aerospace
+ln -s ~/dotfiles/.config/sketchybar ~/.config/sketchybar
 
 # AeroSpace: launch once and grant Accessibility permission
 # (System Settings → Privacy & Security → Accessibility)
 open -a AeroSpace
+
+# SketchyBar: start as a service, then allow it in
+# System Settings → General → Login Items & Extensions → Allow in the Background
+# Also hide the macOS menu bar (Control Center → Automatically hide and show the menu bar → Always)
+brew services start sketchybar
 
 # 5. Restart terminal
 ```
