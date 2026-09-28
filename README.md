@@ -13,6 +13,8 @@ morninghaizhi's personal Mac configuration, managed via symbolic links from `~/d
 │   ├── .zprofile      # Login shell only (currently empty)
 │   └── .zshrc         # Interactive shell only (alias, prompt)
 ├── .config/
+│   ├── aerospace/
+│   │   └── aerospace.toml   # AeroSpace tiling window manager
 │   └── starship/
 │       └── starship.toml
 └── zmk-config-roBa/    # git submodule — keyboard firmware config (builds on its own GitHub Actions)
@@ -26,6 +28,7 @@ morninghaizhi's personal Mac configuration, managed via symbolic links from `~/d
 
 # 2. Install required tools
 brew install starship git
+brew install --cask nikitabobko/tap/aerospace
 
 # 3. Clone this repository (--recurse-submodules to also fetch zmk-config-roBa)
 git clone --recurse-submodules https://github.com/morninghaizhi/dotfiles.git ~/dotfiles
@@ -38,6 +41,11 @@ ln -s ~/dotfiles/zsh/.zprofile ~/.zprofile
 
 mkdir -p ~/.config
 ln -s ~/dotfiles/.config/starship ~/.config/starship
+ln -s ~/dotfiles/.config/aerospace ~/.config/aerospace
+
+# AeroSpace: launch once and grant Accessibility permission
+# (System Settings → Privacy & Security → Accessibility)
+open -a AeroSpace
 
 # 5. Restart terminal
 ```
