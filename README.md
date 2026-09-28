@@ -15,6 +15,8 @@ morninghaizhi's personal Mac configuration, managed via symbolic links from `~/d
 ├── .config/
 │   ├── aerospace/
 │   │   └── aerospace.toml   # AeroSpace tiling window manager
+│   ├── ghostty/
+│   │   └── config           # Ghostty terminal
 │   ├── sketchybar/
 │   │   ├── sketchybarrc     # SketchyBar status bar (shows AeroSpace workspaces)
 │   │   └── plugins/
@@ -38,6 +40,7 @@ brew install starship git
 brew install --cask nikitabobko/tap/aerospace
 brew install FelixKratz/formulae/sketchybar FelixKratz/formulae/borders
 brew install --cask font-hack-nerd-font   # icons used by SketchyBar
+brew install --cask ghostty
 
 # 3. Clone this repository (--recurse-submodules to also fetch zmk-config-roBa)
 git clone --recurse-submodules https://github.com/morninghaizhi/dotfiles.git ~/dotfiles
@@ -52,6 +55,7 @@ mkdir -p ~/.config
 ln -s ~/dotfiles/.config/starship ~/.config/starship
 ln -s ~/dotfiles/.config/aerospace ~/.config/aerospace
 ln -s ~/dotfiles/.config/sketchybar ~/.config/sketchybar
+ln -s ~/dotfiles/.config/ghostty ~/.config/ghostty
 ln -s ~/dotfiles/.config/wezterm ~/.config/wezterm
 
 # AeroSpace: launch once and grant Accessibility permission
