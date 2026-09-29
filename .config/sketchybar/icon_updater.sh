@@ -8,6 +8,9 @@ fi
 
 git clone https://github.com/SoichiroYamane/sketchybar-app-font-bg tmp_icons
 
+# add local icons missing upstream (custom_icons/{svgs,mappings})
+cp -R "$HOME/.config/sketchybar/custom_icons/." tmp_icons/
+
 cd ./tmp_icons || exit
 
 if pnpm install; then
