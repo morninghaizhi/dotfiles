@@ -41,3 +41,4 @@ export PATH="$HOME/.local/bin:$PATH"
 # ツール固有の設定 (環境変数)
 # ------------------------------------------------------------
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"

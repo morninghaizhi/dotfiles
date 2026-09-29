@@ -1,0 +1,31 @@
+# ~/.config/git/config
+# マシンを問わず共通の Git 設定。普段の操作は lazygit で行うので alias は置かない
+# user / credential などマシン固有の設定は ~/.gitconfig 側に置く
+# (~/.gitconfig はこのファイルの後に読まれるので、同じキーは ~/.gitconfig が優先される)
+
+# ------------------------------------------------------------
+# 差分表示 (delta)
+# ------------------------------------------------------------
+# [delta] の設定は lazygit 内の delta にも効く
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true        # n / N で次/前のファイルへジャンプ (CLI のみ。lazygit 内では効かない)
+	line-numbers = true
+[diff]
+	colorMoved = default   # 移動しただけの行を別色で表示
+	algorithm = histogram
+[merge]
+	conflictstyle = zdiff3 # コンフリクト時に共通祖先 (base) も表示
+
+# ------------------------------------------------------------
+# ブランチ / push / fetch
+# ------------------------------------------------------------
+[init]
+	defaultBranch = main
+[push]
+	autoSetupRemote = true # 初回 push で -u origin <branch> を省略できる
+[fetch]
+	prune = true           # リモートで消えたブランチを追従して削除

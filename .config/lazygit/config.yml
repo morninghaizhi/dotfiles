@@ -1,0 +1,34 @@
+# lazygit 設定
+# macOS では既定の置き場所が ~/Library/Application Support/lazygit になるため、
+# .zshenv の LG_CONFIG_FILE でこのファイルを指定している
+
+gui:
+  nerdFontsVersion: "3"    # Hack Nerd Font のアイコンを表示
+  showRandomTip: false
+  showBottomLine: false
+  border: rounded
+  # tokyonight-moon に合わせた配色
+  theme:
+    activeBorderColor:
+      - "#82aaff"
+      - bold
+    inactiveBorderColor:
+      - "#545c7e"
+    selectedLineBgColor:
+      - "#2d3f76"
+    optionsTextColor:
+      - "#82aaff"
+    cherryPickedCommitFgColor:
+      - "#c3e88d"
+    unstagedChangesColor:
+      - "#ff757f"
+
+git:
+  # 差分を delta で表示 (lazygit 内では背景色の自動判定が効かないため --dark を明示)
+  diffRenderers:
+    - type: stdinFilter
+      command: delta --dark --paging=never
+
+os:
+  # `e` でファイルを nvim で開く
+  editPreset: nvim
