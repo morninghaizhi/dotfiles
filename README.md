@@ -17,8 +17,13 @@ morninghaizhi's personal Mac configuration, managed via symbolic links from `~/d
 │   │   └── aerospace.toml   # AeroSpace tiling window manager
 │   ├── ghostty/
 │   │   └── config           # Ghostty terminal
+│   ├── git/
+│   │   ├── config           # Shared git config (delta, merge/push/fetch). user/credential stay in ~/.gitconfig
+│   │   └── ignore           # Global gitignore (don't set core.excludesfile, or this file is skipped)
 │   ├── herdr/
 │   │   └── config.toml      # herdr agent multiplexer (runs inside Ghostty)
+│   ├── lazygit/
+│   │   └── config.yml       # lazygit TUI (loaded via LG_CONFIG_FILE)
 │   ├── sketchybar/
 │   │   ├── sketchybarrc     # SketchyBar status bar (shows AeroSpace workspaces)
 │   │   └── plugins/
@@ -45,6 +50,7 @@ brew install --cask font-hack-nerd-font   # icons used by SketchyBar
 brew install --cask ghostty
 brew install herdr
 brew install --cask codex   # OpenAI Codex CLI (a second agent to drive from herdr)
+brew install lazygit git-delta fzf gh   # git TUI / diff pager / fuzzy finder / GitHub CLI
 
 # 3. Clone this repository (--recurse-submodules to also fetch zmk-config-roBa)
 git clone --recurse-submodules https://github.com/morninghaizhi/dotfiles.git ~/dotfiles
@@ -64,6 +70,10 @@ ln -s ~/dotfiles/.config/ghostty ~/.config/ghostty
 mkdir -p ~/.config/herdr
 ln -s ~/dotfiles/.config/herdr/config.toml ~/.config/herdr/config.toml
 ln -s ~/dotfiles/.config/wezterm ~/.config/wezterm
+ln -s ~/dotfiles/.config/lazygit ~/.config/lazygit
+mkdir -p ~/.config/git
+ln -s ~/dotfiles/.config/git/config ~/.config/git/config
+ln -s ~/dotfiles/.config/git/ignore ~/.config/git/ignore
 
 # AeroSpace: launch once and grant Accessibility permission
 # (System Settings → Privacy & Security → Accessibility)

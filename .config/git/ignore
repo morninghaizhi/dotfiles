@@ -1,0 +1,14 @@
+# ~/.config/git/ignore
+# 全リポジトリ共通の ignore。core.excludesfile 未設定時に git が自動で読む
+# 自分の環境 (OS / エディタ / 個人ツール) 由来のファイルだけを置く
+# プロジェクト由来のもの (.env, ビルド成果物など) は各リポジトリの .gitignore に書く
+
+# OS
+.DS_Store
+
+# エディタ
+*~
+.idea
+
+# Claude Code (個人用のローカル設定)
+**/.claude/settings.local.json
