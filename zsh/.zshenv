@@ -28,9 +28,10 @@ export ANDROID_SDK_ROOT="$ANDROID_HOME"
 export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin"
 
 # ------------------------------------------------------------
-# Homebrew 配下のコマンド (keg-only な Ruby / curl を優先)
+# Homebrew 配下のコマンド (keg-only な curl / node@24 を優先)
 # ------------------------------------------------------------
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+export PATH="/opt/homebrew/opt/node@24/bin:$PATH"
 
 # ------------------------------------------------------------
 # ユーザーローカルのコマンド
