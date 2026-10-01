@@ -9,8 +9,9 @@ morninghaizhi's personal Mac configuration, managed via symbolic links from `~/d
 ├── .gitignore
 ├── README.md
 ├── zsh/
-│   ├── .zshenv        # PATH, env vars (read in all shells)
-│   ├── .zprofile      # Login shell only (currently empty)
+│   ├── .zshenv        # Env vars except PATH (read in all shells)
+│   ├── .zprofile      # PATH / toolchains (login shell, after path_helper)
+│   ├── .zprofile.local.example  # Template for ~/.zprofile.local (machine-specific, untracked)
 │   └── .zshrc         # Interactive shell only (alias, prompt)
 ├── .config/
 │   ├── aerospace/
@@ -98,8 +99,10 @@ herdr --skill > ~/.codex/skills/herdr/SKILL.md
 
 ## Design principles
 
-- **`.zshenv`** — env vars and PATH. Loaded by all zsh types (interactive, non-interactive, login, non-login).
-- **`.zprofile`** — login shell only. Currently empty; kept as a placeholder.
+- **`.zshenv`** — env vars except PATH. Loaded by all zsh types (interactive, non-interactive, login, non-login). PATH set here would be reordered by `/etc/zprofile` (`path_helper`).
+- **`.zprofile`** — PATH and toolchain locations. Login shell only, read after `path_helper`, so the intended order survives. Non-login, non-interactive shells (scripts, `ssh host cmd`) don't get Homebrew on PATH.
+- **`~/.zprofile.local` / `~/.zshrc.local`** — machine-specific settings (e.g. Android SDK / JDK paths). Sourced at the end of `.zprofile` / `.zshrc` if present; never committed. Start from `zsh/.zprofile.local.example`.
+- **Guards** — every external command (`brew`, `mise`, `fzf`, `starship`) is checked before use, so a machine without them starts silently.
 - **`.zshrc`** — interactive-only features (alias, prompt, keybindings, completion).
 - **Single source of truth** — actual files live in `~/dotfiles/`; home directory contains symlinks only.
 - **`zmk-config-roBa`** — a git submodule, not a symlinked dotfile. It stays a standalone repo so its own GitHub Actions keep building the keyboard firmware (`.uf2`); dotfiles only pins which commit to use.
@@ -122,8 +125,8 @@ git add zmk-config-roBa && git commit -m "chore: bump zmk-config-roBa"
 # Edit files in ~/dotfiles/ (or use the symlinked paths — same effect)
 nvim ~/dotfiles/zsh/.zshenv
 
-# Reload in current shell
-source ~/.zshenv
+# Reload in current shell (or just open a new terminal)
+source ~/.zshenv && source ~/.zprofile && source ~/.zshrc
 
 # Commit & push
 cd ~/dotfiles
