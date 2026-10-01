@@ -309,7 +309,12 @@ wifi:subscribe("mouse.exited.global", hide_details)
 
 local function copy_label_to_clipboard(env)
 	local label = sbar.query(env.NAME).label.value
-	sbar.exec('echo "' .. label .. '" | pbcopy')
+	-- SSID は外部から任意に付けられるため、シェルに埋め込まず stdin で渡す
+	local pipe = io.popen("pbcopy", "w")
+	if pipe then
+		pipe:write(label)
+		pipe:close()
+	end
 	sbar.set(env.NAME, { label = { string = icons.clipboard, align = "center" } })
 	sbar.delay(1, function()
 		sbar.set(env.NAME, { label = { string = label, align = "right" } })
