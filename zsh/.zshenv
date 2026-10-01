@@ -1,42 +1,15 @@
 # ~/.zshenv
-# すべての zsh セッション(対話・非対話・ログイン・非ログイン問わず)で読まれる
-# PATH と環境変数のみを記述する
+# すべての zsh セッション(対話・非対話・ログイン・非ログイン問わず)で読まれる。
+# PATH 以外の環境変数のみを記述する。
+# PATH はここに書かない — /etc/zprofile の path_helper がこの後に PATH を
+# 再構築するため、ここで指定した優先順は失われる。PATH は .zprofile で設定する。
 
 # ------------------------------------------------------------
-# Homebrew (Apple Silicon)
+# Homebrew の挙動
 # ------------------------------------------------------------
-# PATH, MANPATH, INFOPATH, HOMEBREW_PREFIX などをまとめて設定
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# ------------------------------------------------------------
-# Java
-# ------------------------------------------------------------
-export JAVA_HOME=$(/usr/libexec/java_home -v 17)
-export PATH="$JAVA_HOME/bin:$PATH"
-
-# ------------------------------------------------------------
-# Flutter / Dart
-# ------------------------------------------------------------
-export PATH="$PATH:$HOME/work/flutter/bin"
-export PATH="$PATH:$HOME/.pub-cache/bin"
-
-# ------------------------------------------------------------
-# Android SDK
-# ------------------------------------------------------------
-export ANDROID_HOME="$HOME/android-sdks"
-export ANDROID_SDK_ROOT="$ANDROID_HOME"
-export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin"
-
-# ------------------------------------------------------------
-# Homebrew 配下のコマンド (keg-only な curl / node@24 を優先)
-# ------------------------------------------------------------
-export PATH="/opt/homebrew/opt/curl/bin:$PATH"
-export PATH="/opt/homebrew/opt/node@24/bin:$PATH"
-
-# ------------------------------------------------------------
-# ユーザーローカルのコマンド
-# ------------------------------------------------------------
-export PATH="$HOME/.local/bin:$PATH"
+export HOMEBREW_NO_ANALYTICS=1      # 利用統計の送信を停止
+export HOMEBREW_NO_AUTO_UPDATE=1    # コマンド毎の自動更新を停止(更新は週次に手動で)
+export HOMEBREW_NO_ENV_HINTS=1      # 設定提案のヒントを抑制
 
 # ------------------------------------------------------------
 # ツール固有の設定 (環境変数)

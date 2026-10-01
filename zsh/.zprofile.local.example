@@ -1,0 +1,18 @@
+# ~/.zprofile.local のテンプレート
+# cp zsh/.zprofile.local.example ~/.zprofile.local して、そのマシンで必要な分を有効化する。
+# 実ファイルは git 管理外。
+
+# ---- Android SDK ----
+# export ANDROID_HOME="$HOME/Library/Android/sdk"
+# export ANDROID_SDK_ROOT="$ANDROID_HOME"
+# export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin"
+
+
+# ---- Java ----
+# Android Studio は同梱の JDK (JetBrains Runtime) を使うので、通常は不要。
+# ターミナルから ./gradlew を直接叩くなど、JAVA_HOME が要るマシンだけ有効化する。
+# バージョンはプロジェクトの都合で決まるので、プロジェクト単位なら mise.toml (java = "temurin-17") も可。
+# if [[ -x /usr/libexec/java_home ]] && /usr/libexec/java_home -v 17 >/dev/null 2>&1; then
+#   export JAVA_HOME="$(/usr/libexec/java_home -v 17)"
+#   export PATH="$JAVA_HOME/bin:$PATH"
+# fi
